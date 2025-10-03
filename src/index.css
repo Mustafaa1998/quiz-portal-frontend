@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body, #root { min-height: 100%; }
+
+  body {
+    margin: 0;
+    background: #0b1220; /* dark base */
+    color: #fff;         /* light text */
+  }
+  body { @apply antialiased; }
+  ::selection { background: #38bdf8; color: #0b1220; }
+}
