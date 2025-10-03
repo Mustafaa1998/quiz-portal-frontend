@@ -1,16 +1,15 @@
-// src/pages/DashboardPage.tsx
+
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import PageLoader from "../components/PageLoader";
 import InlineAlert from "../components/InLineAlerts";
 
-/** ---------- types ---------- */
 type Role = "STUDENT" | "INSTRUCTOR" | "ADMIN";
+
 type JwtPayload = {
   email: string;
   role: Role;
-  exp?: number; // seconds since epoch
+  exp?: number;
 };
 
 function readJwt(): JwtPayload | null {
@@ -38,7 +37,6 @@ function roleToPath(role: Role): string {
   }
 }
 
-/** ---------- component ---------- */
 export default function DashboardPage() {
   const nav = useNavigate();
   const [hydrating, setHydrating] = useState(true);
@@ -47,13 +45,11 @@ export default function DashboardPage() {
   useEffect(() => {
     const p = readJwt();
 
-    // Not logged in → go to login
     if (!p) {
       nav("/login", { replace: true });
       return;
     }
 
-    // Token expired → clear and go to login
     if (p.exp && Date.now() / 1000 > p.exp) {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
@@ -61,13 +57,11 @@ export default function DashboardPage() {
       return;
     }
 
-    // Valid token → send to dedicated dashboard
     if (p.role) {
       nav(roleToPath(p.role), { replace: true });
       return;
     }
 
-    // Should never happen, but just in case
     setErr("Could not determine your role. Please sign in again.");
     setHydrating(false);
   }, [nav]);

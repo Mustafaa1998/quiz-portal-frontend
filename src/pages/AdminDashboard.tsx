@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 import PageLoader from "../components/PageLoader";
 import InlineAlert from "../components/InLineAlerts";
 
-// ---------- API helpers ----------
 const API = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
 
 function authHeaders() {
@@ -63,7 +62,6 @@ async function sendJSON<T>(
   return (res.status === 204 ? (null as any) : (res.json() as Promise<T>));
 }
 
-// ---------- Types ----------
 type SummaryDTO = { users: number; quizzes: number; attempts: number };
 type Quiz = {
   id: number | string;
@@ -76,7 +74,6 @@ type Quiz = {
 type AttemptsPerDayPoint = { date: string; attempts: number };
 type UserRow = { id: number; email: string; name?: string | null; role?: string };
 
-// ---------- Small UI bits ----------
 function Card({
   children,
   className = "",
@@ -120,7 +117,6 @@ function Stat({ label, value }: { label: string; value: number | string }) {
   );
 }
 
-// ---------- Tiny SVG line chart ----------
 function LineChart({ data }: { data: AttemptsPerDayPoint[] }) {
   const width = 640;
   const height = 220;
@@ -180,11 +176,7 @@ function LineChart({ data }: { data: AttemptsPerDayPoint[] }) {
   );
 }
 
-// ======================================================================
-// Admin Dashboard – overview + users + quizzes, dark full-width
-// ======================================================================
 export default function AdminDashboard() {
-  // analytics
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
   const [totals, setTotals] = useState<SummaryDTO>({ users: 0, quizzes: 0, attempts: 0 });
@@ -192,19 +184,13 @@ export default function AdminDashboard() {
   const [recent, setRecent] = useState<Quiz[]>([]);
   const [top, setTop] = useState<Quiz[]>([]);
   const [lastUpdated, setLastUpdated] = useState("");
-
-  // management tabs
   const [tab, setTab] = useState<"overview" | "users" | "quizzes">("overview");
-
-  // users
   const [users, setUsers] = useState<UserRow[]>([]);
   const [userQuery, setUserQuery] = useState("");
   const [userPage, setUserPage] = useState(1);
   const [userTotal, setUserTotal] = useState(0);
   const userPageSize = 10;
   const [usersUnavailable, setUsersUnavailable] = useState(false);
-
-  // quizzes
   const [qrows, setQrows] = useState<Quiz[]>([]);
   const [qQuery, setQQuery] = useState("");
   const [qPage, setQPage] = useState(1);
@@ -300,7 +286,6 @@ export default function AdminDashboard() {
         setQrows([]);
         setQTotal(0);
       } else if (e?.message !== "Unauthorized") {
-        // ignore
       } else {
         setErr(e.message || "Failed to load quizzes");
       }
@@ -362,10 +347,10 @@ export default function AdminDashboard() {
   }, []);
   useEffect(() => {
     if (tab === "users") loadUsers();
-  }, [tab, userPage]); // eslint-disable-line
+  }, [tab, userPage]);
   useEffect(() => {
     if (tab === "quizzes") loadQuizzes();
-  }, [tab, qPage]); // eslint-disable-line
+  }, [tab, qPage]);
 
   const userPages = Math.max(1, Math.ceil(userTotal / userPageSize));
   const quizPages = Math.max(1, Math.ceil(qTotal / qPageSize));
@@ -374,7 +359,6 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-[#0b1220] text-white">
       <PageLoader show={loading} />
       <div className="max-w-6xl mx-auto px-4 py-8">
-        {/* header */}
         <header className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-semibold">Admin Dashboard</h1>
@@ -392,7 +376,6 @@ export default function AdminDashboard() {
           </div>
         </header>
 
-        {/* tabs */}
         <div className="mt-4 flex gap-2">
           {(["overview", "users", "quizzes"] as const).map((t) => (
             <button
@@ -415,7 +398,6 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        {/* OVERVIEW */}
         {tab === "overview" && (
           <>
             <section className="mt-6 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
@@ -424,7 +406,6 @@ export default function AdminDashboard() {
               <Stat label="Total Attempts" value={totals.attempts} />
             </section>
 
-            {/* add vertical gap here */}
             <Card className="mt-6">
               <CardHeader title="Attempts per day" subtitle="Last 14 days" />
               <div className="p-4">
@@ -488,7 +469,6 @@ export default function AdminDashboard() {
           </>
         )}
 
-        {/* USERS */}
         {tab === "users" && (
           <Card className="mt-6">
             <CardHeader
@@ -584,7 +564,6 @@ export default function AdminDashboard() {
           </Card>
         )}
 
-        {/* QUIZZES */}
         {tab === "quizzes" && (
           <Card className="mt-6">
             <CardHeader
@@ -706,7 +685,6 @@ export default function AdminDashboard() {
               )}
             </div>
 
-            {/* Create / Edit modal */}
             {showQuizModal && (
               <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
                 <div className="bg-[#0f172a] text-white rounded-2xl shadow-xl w-full max-w-lg border border-white/10">

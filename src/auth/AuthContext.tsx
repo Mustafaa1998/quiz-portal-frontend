@@ -14,7 +14,7 @@ type Ctx = {
   hydrating: boolean;
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => void;
-  logout: () => void; // alias
+  logout: () => void;
 };
 
 const API = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
@@ -51,7 +51,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
       }
     } catch {
-      /* ignore */
     } finally {
       setHydrating(false);
     }
@@ -92,8 +91,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (!role) role = payload.role;
 
-      // IMPORTANT: avoid mixing || and ?? without parens
-      // Prefer payload.sub if it is a number and current userId is falsy.
       if (!userId) {
         userId =
           typeof payload.sub === "number"
@@ -130,7 +127,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     hydrating,
     signIn,
     signOut,
-    logout: signOut, // alias so components using `logout` keep working
+    logout: signOut,
   };
 
   return <AuthCtx.Provider value={value}>{children}</AuthCtx.Provider>;

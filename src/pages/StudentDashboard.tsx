@@ -28,7 +28,6 @@ type AttemptRow = {
 export default function StudentDashboard() {
   const nav = useNavigate();
   const { user } = useAuth();
-
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [attempts, setAttempts] = useState<AttemptRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -143,11 +142,9 @@ export default function StudentDashboard() {
 
   useEffect(() => {
     loadData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    // just color theming to match landing page
     <div className="min-h-screen bg-[#0b1220] text-white">
       <PageLoader show={loading || taking !== null} />
 
@@ -176,7 +173,6 @@ export default function StudentDashboard() {
           </div>
         )}
 
-        {/* Available Quizzes */}
         <section className="p-4 rounded-2xl border border-white/10 bg-white/5">
           <h2 className="text-lg font-semibold mb-3">Available Quizzes</h2>
 
@@ -210,7 +206,6 @@ export default function StudentDashboard() {
           )}
         </section>
 
-        {/* My Attempts */}
         <section className="p-4 rounded-2xl border border-white/10 bg-white/5">
           <h2 className="text-lg font-semibold mb-3">My Attempts</h2>
 

@@ -91,7 +91,6 @@ export default function QuizListPage() {
       <PageLoader show={loading || taking !== null} />
 
       <div className="max-w-6xl mx-auto px-4 py-8">
-        {/* Header */}
         <header className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-semibold">All Quizzes</h1>
@@ -106,7 +105,6 @@ export default function QuizListPage() {
           </button>
         </header>
 
-        {/* Errors */}
         {err && (
           <div className="mt-4">
             <InlineAlert type="error" onRetry={() => loadQuizzes()}>
@@ -115,7 +113,6 @@ export default function QuizListPage() {
           </div>
         )}
 
-        {/* List */}
         {!loading && quizzes.length > 0 && (
           <section className="mt-6 p-4 rounded-2xl border border-white/10 bg-white/5">
             <h2 className="text-lg font-semibold mb-3">All Quizzes</h2>

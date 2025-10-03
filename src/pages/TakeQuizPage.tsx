@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-
 import PageLoader from "../components/PageLoader";
 import InlineAlert from "../components/InLineAlerts";
 
@@ -40,7 +39,6 @@ export default function TakeQuizPage() {
   const quizId = Number(quizIdParam);
   const attemptId = Number(attemptIdParam);
   const nav = useNavigate();
-
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -211,7 +209,6 @@ export default function TakeQuizPage() {
 
       {!loading && !err && total > 0 && (
         <>
-          {/* question nav bubbles */}
           <div className="flex flex-wrap gap-2">
             {questions.map((qq, i) => {
               const done = typeof answers[qq.id] === "number";
@@ -235,7 +232,6 @@ export default function TakeQuizPage() {
             })}
           </div>
 
-          {/* current question */}
           {questions[current] && (
             <section className="p-4 rounded-2xl border border-white/10 bg-white/5">
               <h2 className="text-lg font-semibold mb-3">{questions[current].text}</h2>
@@ -265,7 +261,6 @@ export default function TakeQuizPage() {
             </section>
           )}
 
-          {/* nav + finish */}
           <div className="flex items-center justify-between">
             <button
               className="px-3 py-2 rounded border border-white/10 bg-white/5 text-white hover:bg-white/10 disabled:opacity-50"
@@ -294,7 +289,6 @@ export default function TakeQuizPage() {
             </div>
           </div>
 
-          {/* result */}
           {finished && (
             <section className="p-4 rounded-2xl border border-white/10 bg-white/5 space-y-3">
               <h3 className="text-lg font-semibold">Your Result</h3>

@@ -38,25 +38,20 @@ async function parseError(res: Response) {
 export default function AttemptPage() {
   const { quizId, attemptId } = useParams();
   const nav = useNavigate();
-
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
   const [err, setErr] = useState<string>("");
-
   const [questions, setQuestions] = useState<Question[]>([]);
   const [idx, setIdx] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
-
   const abortRef = useRef<AbortController | null>(null);
-
   const load = useCallback(async () => {
     setErr("");
     setLoading(true);
-
     abortRef.current?.abort();
     const ctrl = new AbortController();
     abortRef.current = ctrl;
-
+    
     try {
       const res = await fetch(`${API}/quiz/${quizId}/questions`, {
         headers: authHeaders(),
@@ -160,9 +155,7 @@ export default function AttemptPage() {
   return (
     <div className="min-h-screen bg-[#0b1220] text-white px-4 py-6">
       <PageLoader show={sending} />
-
       <div className="max-w-3xl mx-auto space-y-6">
-        {/* Progress */}
         <header>
           <h1 className="text-xl font-semibold">
             Question {idx + 1} / {total}
@@ -179,7 +172,6 @@ export default function AttemptPage() {
           </div>
         </header>
 
-        {/* Question */}
         <section className="p-4 rounded-xl border border-white/10 bg-white/5">
           <p className="text-lg font-medium mb-4">{q.text}</p>
 
@@ -200,7 +192,6 @@ export default function AttemptPage() {
           </div>
         </section>
 
-        {/* Navigation */}
         <div className="flex justify-between items-center">
           <button
             onClick={() => {

@@ -208,7 +208,7 @@ export default function AttemptDetailPage() {
                             }`}
                             title={a.isCorrect ? "Correct" : "Incorrect"}
                           >
-                            {a.isCorrect ? "✅ Correct" : "❌ Wrong"}
+                            {a.isCorrect ? "Correct" : "Wrong"}
                           </div>
                         </div>
                       </li>

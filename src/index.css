@@ -7,8 +7,8 @@
 
   body {
     margin: 0;
-    background: #0b1220; /* dark base */
-    color: #fff;         /* light text */
+    background: #0b1220;
+    color: #fff;
   }
   body { @apply antialiased; }
   ::selection { background: #38bdf8; color: #0b1220; }

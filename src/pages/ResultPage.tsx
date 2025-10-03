@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-
 import PageLoader from "../components/PageLoader";
 import InlineAlert from "../components/InLineAlerts";
 
@@ -33,13 +32,10 @@ function authHeaders() {
 export default function ResultPage() {
   const { quizId, attemptId } = useParams();
   const nav = useNavigate();
-
   const [data, setData] = useState<Result | null>(null);
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(true);
-
   const abortRef = useRef<AbortController | null>(null);
-
   const load = useCallback(async () => {
     if (!quizId || !attemptId) {
       setErr("Invalid URL: quizId or attemptId is missing.");
@@ -148,7 +144,7 @@ export default function ResultPage() {
                       a.isCorrect ? "text-emerald-400" : "text-red-400"
                     }
                   >
-                    {a.isCorrect ? "✅ correct" : "❌ wrong"}
+                    {a.isCorrect ? "correct" : "wrong"}
                   </div>
                 </li>
               ))}
