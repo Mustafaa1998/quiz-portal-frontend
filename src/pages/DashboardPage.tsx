@@ -13,9 +13,6 @@ type JwtPayload = {
   exp?: number; // seconds since epoch
 };
 
-/** ---------- helpers ---------- */
-const API = import.meta?.env?.VITE_API_URL ?? "http://localhost:3000";
-
 function readJwt(): JwtPayload | null {
   const raw = localStorage.getItem("token");
   if (!raw) return null;
